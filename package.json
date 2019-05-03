@@ -24,6 +24,7 @@
     "cors": "^2.8.5",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "mongoose": "^5.5.5",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
