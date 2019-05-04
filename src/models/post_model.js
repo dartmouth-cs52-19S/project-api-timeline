@@ -4,17 +4,13 @@ import mongoose, { Schema } from 'mongoose';
 const PostSchema = new Schema({
   title: String,
   cover_url: String,
-  tags: String,
+  tags: Array,
   content: String,
 }, {
   toJSON: {
     virtuals: true,
   },
 });
-
-// PostSchema.virtual('score').get(function scoreCalc() {
-//   return this.upvotes - this.downvotes;
-// });
 
 // create PostModel class from schema
 const PostModel = mongoose.model('Post', PostSchema);
