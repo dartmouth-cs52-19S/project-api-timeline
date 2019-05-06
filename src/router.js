@@ -11,7 +11,8 @@ router.get('/', (req, res) => {
 // /your routes will go here
 router.route('/posts')
   .post(Posts.createPost)
-  .get(Posts.getPosts);
+  .get(Posts.getPosts)
+  .search(Posts.search);
 
 router.route('/posts/:postID')
   .put(Posts.updatePost)
