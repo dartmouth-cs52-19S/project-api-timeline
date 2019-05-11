@@ -6,6 +6,8 @@ export const createPost = (req, res) => {
   post.content = req.body.content;
   post.tags = req.body.tags.split(' ');
   post.cover_url = req.body.cover_url;
+  post.author = req.body.author;
+  post.username = req.user.username;
 
   post.save()
     .then((result) => {
@@ -68,10 +70,13 @@ export const deletePost = (req, res) => {
 };
 
 export const updatePost = (req, res) => {
+  console.log(req.body);
+  const tgs = `${req.body.tags}`;
+
   const fields = {
     title: req.body.title,
     content: req.body.content,
-    tags: req.body.tags.split(' '),
+    tags: tgs.split(' '),
     cover_url: req.body.cover_url,
   };
   console.log(req);
