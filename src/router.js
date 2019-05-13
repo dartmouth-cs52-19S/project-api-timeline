@@ -18,8 +18,7 @@ router.route('/posts')
 router.route('/posts/:postID')
   .put(requireAuth, Posts.updatePost)
   .get(Posts.getPost)
-  .delete(requireAuth, Posts.deletePost)
-  .check(UserController.getUser);
+  .delete(requireAuth, Posts.deletePost);
 
 router.post('/signin', requireSignin, UserController.signin);
 router.post('/signup', UserController.signup);
