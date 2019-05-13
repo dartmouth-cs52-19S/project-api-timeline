@@ -20,6 +20,9 @@ router.route('/posts/:postID')
   .get(Posts.getPost)
   .delete(requireAuth, Posts.deletePost);
 
+router.route('/auth')
+  .get(requireAuth, UserController.getUser);
+
 router.post('/signin', requireSignin, UserController.signin);
 router.post('/signup', UserController.signup);
 
