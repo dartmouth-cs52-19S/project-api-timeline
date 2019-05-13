@@ -70,34 +70,30 @@ export const deletePost = (req, res) => {
 };
 
 export const updatePost = (req, res) => {
-  if (req.body.author === req.user) {
-    console.log(req.body);
-    const tgs = `${req.body.tags}`;
+  console.log(req.body);
+  const tgs = `${req.body.tags}`;
 
-    const fields = {
-      title: req.body.title,
-      content: req.body.content,
-      tags: tgs.split(' '),
-      cover_url: req.body.cover_url,
-    };
-    console.log(req);
+  const fields = {
+    title: req.body.title,
+    content: req.body.content,
+    tags: tgs.split(' '),
+    cover_url: req.body.cover_url,
+  };
+  console.log(req);
 
-    Post.findByIdAndUpdate(req.params.postID, fields)
-      .then((result) => {
-        const updated = {
-          title: req.body.title,
-          content: req.body.content,
-          tags: req.body.tags,
-          cover_url: req.body.cover_url,
-        };
-        res.json(updated);
-      })
-      .catch((error) => {
-        res.status(500).json({ error });
-      });
-  } else {
-    res.json('WRONG USER, NO EDITING PERMISSION');
-  }
+  Post.findByIdAndUpdate(req.params.postID, fields)
+    .then((result) => {
+      const updated = {
+        title: req.body.title,
+        content: req.body.content,
+        tags: req.body.tags,
+        cover_url: req.body.cover_url,
+      };
+      res.json(updated);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
 };
 
 
