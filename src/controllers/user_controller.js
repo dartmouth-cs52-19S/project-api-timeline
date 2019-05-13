@@ -48,14 +48,15 @@ export const signup = (req, res, next) => {
 
       res.status(500).json({ error });
     });
+};
 
-
-// 🚀 TODO:
-// here you should do a mongo query to find if a user already exists with this email.
-// if user exists then return an error. If not, use the User model to create a new user.
-// Save the new User object
-// this is similar to how you created a Post
-// and then return a token same as you did in in signin
+export const getUser = (req, res) => {
+  const { username } = req.user;
+  res.json(username)
+    .catch((err) => {
+      console.log('Error');
+      res.status(500).json({ err });
+    });
 };
 
 // encodes a new token for a user object

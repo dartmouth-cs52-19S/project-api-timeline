@@ -1,4 +1,4 @@
-# Lab 5
+# Lab 5 Part 2
 ## Abhimanyu Kapur
 
 
@@ -8,14 +8,18 @@
 ### What Worked (or Didn't)
 * Got a much better understanding of redux and life cycle, and flow of control
 * Planning components in advance and keeping it simple was helpful
-* What didn't work was my understanding of reducers initially
+* What didn't work was my understanding of the schema model initially
 
 ### Extra Credit
-* Styling
-* Storing tags as an array (split by white space)
+* Only author of post can edit/delete it
+* Styling - Using React Material Ui
 
 ### Screenshots
 
+# Part 2
+
+
+# Part 1
 ![](./src/img/Capture1.PNG)
 ![](./src/img/Capture2.PNG)
 ![](./src/img/Capture3.PNG)

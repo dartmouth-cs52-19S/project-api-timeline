@@ -96,7 +96,7 @@ export const updatePost = (req, res) => {
         res.status(500).json({ error });
       });
   } else {
-    res.send('WRONG USER, NO EDITING PERMISSION');
+    res.json('WRONG USER, NO EDITING PERMISSION');
   }
 };
 
