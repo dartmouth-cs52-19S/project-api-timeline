@@ -3,7 +3,7 @@
 
 
 ### Description
-* A fun and ~ simple ~ blog CRUD web app server to be used by anyone!!!
+* A fun and ~ simple ~ blog CRUD web app server to be used by anyone!!! Includes Authentication
 
 ### What Worked (or Didn't)
 * Got a much better understanding of redux and life cycle, and flow of control
@@ -11,7 +11,8 @@
 * What didn't work was my understanding of the schema model initially
 
 ### Extra Credit
-* Only author of post can edit/delete it
+* (Extend Permissions) Only author of post can edit/delete it
+* Error Message handling
 * Styling - Using React Material Ui
 
 ### Screenshots
@@ -20,11 +21,10 @@
 
 
 # Part 1
-![](./src/img/Capture1.PNG)
-![](./src/img/Capture2.PNG)
-![](./src/img/Capture3.PNG)
-![](./src/img/Capture4.PNG)
-
+![](../static/Capture.PNG)
+![](../static/Capture1.PNG)
+![](../static/Capture2.PNG)
+![](../static/Capture3.PNG)
 
 
 
