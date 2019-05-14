@@ -16,9 +16,12 @@ TODO: how to get the project dev environment up and running, npm install etc
 ## Deployment
 
 TODO: how to deploy the project
+Procfile set up to run on [heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app)
+
 
 ## Authors
 
 TODO: list of authors
 
 ## Acknowledgments
+
