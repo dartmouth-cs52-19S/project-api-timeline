@@ -95,14 +95,3 @@ export const updatePost = (req, res) => {
       res.status(500).json({ error });
     });
 };
-
-
-export const search = (req, res) => {
-  Post.find({ $text: { $search: res.body.term } })
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
-};
