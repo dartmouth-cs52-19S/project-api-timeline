@@ -12,6 +12,8 @@ Code is based off Abhi's Lab 5 for backend (this) and Regina's Lab 4/5 for front
 `yarn` all the things
 
 ## Deployment
+heroku git: https://git.heroku.com/timimeline.git
+heroku domain: https://timimeline.herokuapp.com/
 
 Stay tuned for the deployed site. Change the deploy URL in package.json to another surge URL and hit that `yarn deploy`.
 
