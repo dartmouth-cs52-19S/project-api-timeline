@@ -9,16 +9,7 @@ Timeline is amorphous, unique, and mysterious. Super cool. You don't really know
 Code is based off Abhi's Lab 5 for backend (this) and Regina's Lab 4/5 for frontend. 
 
 ## Setup
-
-`rm -rf *`
-
-jk JK
-
-`sudo rm -rf *`
-
-alright
-
-`yarn`
+`yarn` all the things
 
 ## Deployment
 
