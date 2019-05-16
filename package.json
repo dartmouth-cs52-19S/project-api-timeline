@@ -5,7 +5,7 @@
   "author": "",
   "main": "src/server.js",
   "scripts": {
-    "test": "eslint src/**.js",
+    "test": "./node_modules/.bin/eslint src",
     "dev": "nodemon src/server.js --exec babel-node",
     "start": "babel-node src/server.js",
     "build": "babel src -d dist",
@@ -13,7 +13,7 @@
   },
   "license": "ISC",
   "engines": {
-    "node": ">=9 <=11",
+    "node": ">=9 <=12",
     "npm": "^5.6.0",
     "yarn": "^1.6.0"
   },
