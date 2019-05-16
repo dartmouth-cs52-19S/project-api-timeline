@@ -1,27 +1,38 @@
 # Timeline
 
-![Team Photo](Insert a Team Photo URL here)
-[*how?*](https://help.github.com/articles/about-readmes/#relative-links-and-image-paths-in-readme-files)
+![Team Photo](src/img/teamTimeline.jpeg)
 
-TODO: short project description, some sample screenshots or mockups
+Timeline is amorphous, unique, and mysterious. Super cool. You don't really know what it is. We don't either! Let's hope we both find out in the next two weeks.
 
 ## Architecture
 
-TODO:  descriptions of code organization and tools and libraries used
+Code is based off Abhi's Lab 5 for backend (this) and Regina's Lab 4/5 for frontend. 
 
 ## Setup
-
-TODO: how to get the project dev environment up and running, npm install etc
+`yarn` all the things
 
 ## Deployment
+heroku git: https://git.heroku.com/timimeline.git
+heroku domain: https://timimeline.herokuapp.com/
 
-TODO: how to deploy the project
-Procfile set up to run on [heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app)
+Stay tuned for the deployed site. Change the deploy URL in package.json to another surge URL and hit that `yarn deploy`.
+
+To test locally, clone `project-api-timeline` and `project-timeline` repos. `yarn dev` it all, and mongod/mongo the backend. Frontend runs on localhost port 8080 while backend runs on 9090. 
 
 
 ## Authors
 
-TODO: list of authors
+Abhimanyu Kapur '21
+
+Katie Goldstein '20
+
+Regina Yan '19
+
+Sheppard Somers '19
+
+Zoe Yu '19
 
 ## Acknowledgments
 
+TA's
+Tim
