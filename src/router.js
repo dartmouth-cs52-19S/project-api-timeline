@@ -26,7 +26,7 @@ router.route('/explore')
   .post(Timelines.createTimeline)
   .get(Timelines.rootTimeline);
 
-router.route('/timeline/:postID')
+router.route('/timeline/:timelineID')
   .get(Timelines.getTimeline);
 
 router.route('/auth')

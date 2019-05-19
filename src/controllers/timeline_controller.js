@@ -25,7 +25,7 @@ export const createTimeline = (req, res) => {
 // based on the root timeline
 export const rootTimeline = (req, res) => {
   // find the root timeline
-  Timeline.find({ level: 0 })
+  Timeline.find({ title: 'root' })
     .then((result) => {
       console.log(result);
       res.json(result);
@@ -52,7 +52,7 @@ export const getTimeline = (req, res) => {
       // res.send('timelines should be returned');
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      res.status(500).json(error);
     });
 };
 
