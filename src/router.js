@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as Posts from './controllers/post_controller';
 import * as UserController from './controllers/user_controller';
+import * as Timelines from './controllers/timeline_controller';
 import { requireAuth, requireSignin } from './services/passport';
 
 
@@ -19,6 +20,14 @@ router.route('/posts/:postID')
   .put(requireAuth, Posts.updatePost)
   .get(Posts.getPost)
   .delete(requireAuth, Posts.deletePost);
+
+// timeline routes
+router.route('/explore')
+  .post(Timelines.createTimeline)
+  .get(Timelines.rootTimeline);
+
+router.route('/timeline/:postID')
+  .get(Timelines.getTimeline);
 
 router.route('/auth')
   .get(requireAuth, UserController.getUser);
