@@ -27,11 +27,14 @@ export const signup = (req, res, next) => {
       if (result != null) {
         res.json('ERROR USER EXISTS');
       } else {
+        const { startTime } = req.body;
+        const { currentPlace } = req.body;
         const user = new User();
         user.password = password;
         user.email = email;
         user.username = username;
-        console.log(user);
+        user.startTime = startTime;
+        user.currentPlace = currentPlace;
         user.save()
           .then((rslt) => {
             console.log('got result');
@@ -50,9 +53,28 @@ export const signup = (req, res, next) => {
     });
 };
 
+// Gets and returns username
 export const getUser = (req, res) => {
   const { username } = req.user;
   res.json(username)
+    .catch((err) => {
+      console.log('Error');
+      res.status(500).json({ err });
+    });
+};
+
+// Returns all user info
+export const getUserInfo = (req, res) => {
+  const { username } = req.user;
+  const { email } = req.user;
+  const { password } = req.user;
+  const { currentPlace } = req.user;
+  const { startTime } = req.user;
+  const { timelines } = req.user;
+  const user = new User({
+    username, password, email, currentPlace, startTime, timelines,
+  });
+  res.json(user)
     .catch((err) => {
       console.log('Error');
       res.status(500).json({ err });
