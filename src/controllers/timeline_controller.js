@@ -41,13 +41,6 @@ export const getTimeline = (req, res) => {
   // res.send('single timeline looked up');
   Timeline.findById(req.params.timelineID)
     .then((result) => {
-      let tags = '';
-      result.tags.forEach((element) => {
-        if (element !== '') {
-          tags += `${element} `;
-        }
-      });
-      result.tags = tags;
       res.json(result);
       // res.send('timelines should be returned');
     })
