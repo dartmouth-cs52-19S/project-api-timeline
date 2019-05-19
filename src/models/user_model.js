@@ -6,6 +6,9 @@ const UserSchema = new Schema({
   email: { type: String, unique: true, lowercase: true },
   username: { type: String, unique: true, lowercase: true },
   password: { type: String },
+  start_time: Date,
+  current_place: String,
+  timelines: Array,
 }, {
   toJSON: {
     virtuals: true,
