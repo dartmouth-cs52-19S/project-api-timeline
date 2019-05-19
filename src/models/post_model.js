@@ -14,6 +14,8 @@ const PostSchema = new Schema({
   },
 });
 
+PostSchema.index({ '$**': 'text' });
+
 // create PostModel class from schema
 const PostModel = mongoose.model('Post', PostSchema);
 
