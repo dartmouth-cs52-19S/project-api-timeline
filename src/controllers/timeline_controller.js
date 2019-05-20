@@ -25,7 +25,7 @@ export const createTimeline = (req, res) => {
 // based on the root timeline
 export const rootTimeline = (req, res) => {
   // find the root timeline
-  Timeline.find({ title: 'root' })
+  Timeline.findOne({ title: 'root' })
     .populate('events', ['title', 'time'])
     .then((result) => {
       console.log(result);
