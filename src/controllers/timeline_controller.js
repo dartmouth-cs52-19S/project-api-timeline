@@ -26,6 +26,7 @@ export const createTimeline = (req, res) => {
 export const rootTimeline = (req, res) => {
   // find the root timeline
   Timeline.find({ title: 'root' })
+    .populate('events', ['title', 'time'])
     .then((result) => {
       console.log(result);
       res.json(result);
@@ -40,7 +41,9 @@ export const rootTimeline = (req, res) => {
 export const getTimeline = (req, res) => {
   // res.send('single timeline looked up');
   Timeline.findById(req.params.timelineID)
+    .populate('events', ['title', 'time'])
     .then((result) => {
+      console.log(result);
       res.json(result);
       // res.send('timelines should be returned');
     })
