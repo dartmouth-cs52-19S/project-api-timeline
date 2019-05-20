@@ -6,7 +6,134 @@ Timeline is amorphous, unique, and mysterious. Super cool. You don't really know
 
 ## Architecture
 
-Code is based off Abhi's Lab 5 for backend (this) and Regina's Lab 4/5 for frontend. 
+### API Routes
+* GET ```/api/explore``` returns the root timeline element which contains the list of top level timelines under an array ```events```. [link](https://timimeline.herokuapp.com/api/explore).
+* GET ```/api/timeline/:timelineId``` returns the requested timeline object. [link](https://timimeline.herokuapp.com/api/timeline/5ce1dfadf41c760034ffe52d).
+* There is also a route to create a timeline post, but it does not yet fill in the appropriate events below it nor does it go to the level above to insert its own reference in the timeline that includes it. 
+
+Note that the database does not have all the data in it by any stretch. It does contain two paths that go to college (4yr) and work (internship). 
+
+<details>
+    <summary>Examples</summary> 
+
+```https://timimeline.herokuapp.com/api/explore```
+```json
+    {
+        "events": [
+            {
+                "_id": "5ce1dfadf41c760034ffe52d",
+                "title": "Work",
+                "time": "1970-01-01T10:48:00.000Z",
+                "id": "5ce1dfadf41c760034ffe52d"
+            },
+            {
+                "_id": "5ce1df40f41c760034ffe52c",
+                "title": "Education",
+                "time": "1970-01-01T18:00:00.000Z",
+                "id": "5ce1df40f41c760034ffe52c"
+            }
+        ],
+        "_id": "5ce1b7c6c75aa400347686ee",
+        "title": "root",
+        "level": 0,
+        "__v": 0,
+        "id": "5ce1b7c6c75aa400347686ee"
+    }
+```
+
+```localhost:9090/api/timeline/5ce1c555cc465b0034eceed7```
+```json
+{
+    "events": [
+        {
+            "_id": "5ce1c166cc465b0034eceecf",
+            "title": "Standardized Tests",
+            "time": "1970-01-01T18:00:00.000Z",
+            "id": "5ce1c166cc465b0034eceecf"
+        },
+        {
+            "_id": "5ce1c4fecc465b0034eceed0",
+            "title": "Common App",
+            "time": "1970-01-02T00:28:48.000Z",
+            "id": "5ce1c4fecc465b0034eceed0"
+        },
+        {
+            "_id": "5ce1c525cc465b0034eceed1",
+            "title": "Letters of Recommendation",
+            "time": "1970-01-02T01:55:12.000Z",
+            "id": "5ce1c525cc465b0034eceed1"
+        },
+        {
+            "_id": "5ce1c52dcc465b0034eceed2",
+            "title": "FAFSA",
+            "time": "1970-01-02T06:14:24.000Z",
+            "id": "5ce1c52dcc465b0034eceed2"
+        },
+        {
+            "_id": "5ce1c534cc465b0034eceed3",
+            "title": "Early Decision",
+            "time": "1970-01-02T04:04:48.000Z",
+            "id": "5ce1c534cc465b0034eceed3"
+        }
+    ],
+    "_id": "5ce1c555cc465b0034eceed7",
+    "title": "College",
+    "time": "1970-01-01T18:00:00.000Z",
+    "content": "A college education can gives you ",
+    "cover_url": "https://upload.wikimedia.org/wikipedia/commons/0/07/Orange_circle.png",
+    "__v": 0,
+    "id": "5ce1c555cc465b0034eceed7"
+}
+```
+
+</details>
+
+### Models
+#### Timeline
+**timeline** is the generic timeline object. It is intended to store an object that is in any level of the timeline hierarchy in the same format in case later add more levels and to simplify (hopefully) displaying these timelines. Each object contains a reference to its children ```events``` as well as information about itself. A timeline object is the following: 
+
+```javascript
+const TimelineSchema = new Schema({
+  title: String,
+  // array of all its children timeline objects, populated with title & time when fetched
+  events: [{ type: Schema.Types.ObjectId, ref: 'Timeline' }],
+  time: Date, // javascript date object (hopefully) that is just the seconds of the #months it is from start of high school
+  cover_url: String, // an image url, right now these are all just orange circles
+  level: Number, // this is probably unnessecary? 
+  content: String,
+});
+```
+
+So when you fetch either the explore page or a specific timeline you can expect a response structure of: 
+
+```json
+{
+    "events": [
+        {
+            "_id": "5ce1c166cc465b0034eceecf",
+            "title": "Standardized Tests",
+            "time": "1970-01-01T18:00:00.000Z",
+            "id": "5ce1c166cc465b0034eceecf"
+        },
+        {
+            "_id": "5ce1c4fecc465b0034eceed0",
+            "title": "Common App",
+            "time": "1970-01-02T00:28:48.000Z",
+            "id": "5ce1c4fecc465b0034eceed0"
+        }
+    ],
+    "_id": "5ce1c555cc465b0034eceed7",
+    "title": "College",
+    "time": "1970-01-01T18:00:00.000Z",
+    "content": "A college education can gives you ",
+    "cover_url": "https://upload.wikimedia.org/wikipedia/commons/0/07/Orange_circle.png",
+    "__v": 0,
+    "id": "5ce1c555cc465b0034eceed7"
+}
+```
+
+#### Users
+The user model contains the user password as well as...
 
 ## Setup
 `yarn` all the things
@@ -32,7 +159,12 @@ Sheppard Somers '19
 
 Zoe Yu '19
 
+## Sources
+
+Code is based off Abhi's Lab 5 for backend (this) and Regina's Lab 4/5 for frontend. Unfortunately we have not populated their sources to here...so check out their assignments if you're really concerned. Generally the structure follows what was given in class and in the lab assignments for lab 5.
+
 ## Acknowledgments
 
 TA's
 Tim
+
