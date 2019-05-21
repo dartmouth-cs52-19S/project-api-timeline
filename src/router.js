@@ -23,8 +23,10 @@ router.route('/posts/:postID')
 
 // timeline routes
 router.route('/explore')
-  .post(Timelines.createTimeline)
   .get(Timelines.rootTimeline);
+
+router.route('/timeline')
+  .post(Timelines.createTimeline);
 
 router.route('/timeline/:timelineID')
   .get(Timelines.getTimeline);
