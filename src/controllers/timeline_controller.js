@@ -8,7 +8,7 @@ export const createTimeline = (req, res) => {
   timeline.level = req.body.level;
   timeline.filter = req.body.filter;
   timeline.content = req.body.content;
-  timeline.parent = req.boyd.parentId;
+  timeline.parent = req.body.parentID;
 
   // save and return the result if successful
   timeline.save()
