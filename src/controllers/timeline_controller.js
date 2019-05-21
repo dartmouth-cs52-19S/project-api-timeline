@@ -8,26 +8,17 @@ export const createTimeline = (req, res) => {
   timeline.level = req.body.level;
   timeline.filter = req.body.filter;
   timeline.content = req.body.content;
-  timeline.parent = req.body.parentID;
+  timeline.parent = req.body.parent;
   timeline.events = [];
 
   // save and return the result if successful
   timeline.save()
     .then((result) => {
       // add to its parent's events
-      Timeline.findById(req.body.parentID)
+      Timeline.findById(timeline.parent)
         .then((par) => {
           par.events.push(result._id);
-          par.save()
-            .catch((parError) => {
-              res.status(500).json({ mess: 'error adding to parents events', parError });
-            });
-        })
-        .catch((parErrorfind) => {
-          res.status(500).json({
-            mess: `find failed for parent id: ${req.body.parentID}`,
-            parErrorfind,
-          });
+          par.save();
         });
 
       // send the result back as confirmation
