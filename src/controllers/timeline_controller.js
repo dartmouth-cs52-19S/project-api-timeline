@@ -38,6 +38,32 @@ export const createTimeline = (req, res) => {
     });
 };
 
+// needed?
+export const updateTimeline = (req, res) => {
+  console.log(req.body);
+
+  const fields = {
+    title: req.body.title,
+    time: req.body.time,
+    cover_url: req.body.cover_url,
+    level: req.body.level,
+    filter: req.body.filter,
+    content: req.body.content,
+    parent: req.body.parentID,
+    events: [],
+  };
+  console.log(req);
+
+  Timeline.findByIdAndUpdate(req.params.timelineID, fields, { new: true })
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
+};
+
+
 // respond with the highest level of the timeline
 // based on the root timeline
 export const rootTimeline = (req, res) => {
@@ -76,32 +102,4 @@ export const deleteTimeline = (req, res) => {
     if (err) return console.log(err);
     else return console.log('Deleted successfully');
   });
-};
-
-// needed?
-export const updateTimeline = (req, res) => {
-  console.log(req.body);
-  const tgs = `${req.body.tags}`;
-
-  const fields = {
-    title: req.body.title,
-    content: req.body.content,
-    tags: tgs.split(' '),
-    cover_url: req.body.cover_url,
-  };
-  console.log(req);
-
-  Timeline.findByIdAndUpdate(req.params.timelineID, fields)
-    .then((result) => {
-      const updated = {
-        title: req.body.title,
-        content: req.body.content,
-        tags: req.body.tags,
-        cover_url: req.body.cover_url,
-      };
-      res.json(updated);
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
 };

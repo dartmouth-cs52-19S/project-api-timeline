@@ -1,7 +1,5 @@
 # Timeline
 
-![Team Photo](src/img/teamTimeline.jpeg)
-
 Timeline is amorphous, unique, and mysterious. Super cool. You don't really know what it is. We don't either! Let's hope we both find out in the next two weeks.
 
 ## Architecture
@@ -9,6 +7,17 @@ Timeline is amorphous, unique, and mysterious. Super cool. You don't really know
 ### API Routes
 * GET ```/api/explore``` returns the root timeline element which contains the list of top level timelines under an array ```events```. [link](https://timimeline.herokuapp.com/api/explore).
 * GET ```/api/timeline/:timelineId``` returns the requested timeline object. [link](https://timimeline.herokuapp.com/api/timeline/5ce1dfadf41c760034ffe52d).
+* POST ```/api/timeline``` creates a new timeline object under a given parent. The post should include the req items shown on the right: 
+```javascript
+  timeline.title = req.body.title;
+  timeline.time = req.body.time;
+  timeline.cover_url = req.body.cover_url;
+  timeline.level = req.body.level;
+  timeline.filter = req.body.filter;
+  timeline.content = req.body.content;
+  timeline.parent = req.body.parentID;
+```
+* POST ```/api/timeline/:timelineID``` updates the timeline. Takes the same inputes in the request as the create one.
 * There is also a route to create a timeline post, but it does not yet fill in the appropriate events below it nor does it go to the level above to insert its own reference in the timeline that includes it. 
 
 Note that the database does not have all the data in it by any stretch. It does contain two paths that go to college (4yr) and work (internship). 
@@ -168,3 +177,4 @@ Code is based off Abhi's Lab 5 for backend (this) and Regina's Lab 4/5 for front
 TA's
 Tim
 
+![Team Photo](src/img/teamTimeline.jpeg)
