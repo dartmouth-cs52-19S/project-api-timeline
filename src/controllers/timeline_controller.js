@@ -3,17 +3,33 @@ import Timeline from '../models/timeline_model';
 export const createTimeline = (req, res) => {
   const timeline = new Timeline();
   timeline.title = req.body.title;
-  timeline.events = req.body.events;
   timeline.time = req.body.time;
-  timeline.content = req.body.content;
   timeline.cover_url = req.body.cover_url;
   timeline.level = req.body.level;
   timeline.filter = req.body.filter;
   timeline.content = req.body.content;
+  timeline.parent = req.boyd.parentId;
 
   // save and return the result if successful
   timeline.save()
     .then((result) => {
+      // add to its parent's events
+      Timeline.findById(req.body.parentID)
+        .then((par) => {
+          par.events.push(result._id);
+          par.save()
+            .catch((parError) => {
+              res.status(500).json({ mess: 'error adding to parents events', parError });
+            });
+        })
+        .catch((parErrorfind) => {
+          res.status(500).json({
+            mess: `find failed for parent id: ${req.body.parentID}`,
+            parErrorfind,
+          });
+        });
+
+      // send the result back as confirmation
       res.json(result);
     })
     .catch((error) => {
