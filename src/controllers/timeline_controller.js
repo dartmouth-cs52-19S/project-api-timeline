@@ -9,6 +9,7 @@ export const createTimeline = (req, res) => {
   timeline.filter = req.body.filter;
   timeline.content = req.body.content;
   timeline.parent = req.body.parentID;
+  timeline.events = [];
 
   // save and return the result if successful
   timeline.save()
