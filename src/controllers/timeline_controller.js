@@ -41,7 +41,6 @@ export const updateTimeline = (req, res) => {
     filter: req.body.filter,
     content: req.body.content,
     parent: req.body.parentID,
-    events: [],
   };
   console.log(req);
 
@@ -66,7 +65,7 @@ export const deleteTimeline = (req, res) => {
         });
     });
   deleteHelper(req.params.timelineID);
-  res.json('Delete attempted');
+  res.json('Deleted.');
 };
 
 
