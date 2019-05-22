@@ -33,6 +33,10 @@ router.route('/timeline/:timelineID')
   .delete(Timelines.deleteTimeline)
   .get(Timelines.getTimeline);
 
+// linking route to save to user
+router.route('/user/link')
+  .post(Timelines.linkTimelines);
+
 router.route('/auth')
   .get(requireAuth, UserController.getUser);
 
