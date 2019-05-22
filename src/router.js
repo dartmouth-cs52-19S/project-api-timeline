@@ -30,6 +30,7 @@ router.route('/timeline')
 
 router.route('/timeline/:timelineID')
   .post(Timelines.updateTimeline)
+  .delete(Timelines.deleteTimeline)
   .get(Timelines.getTimeline);
 
 router.route('/auth')

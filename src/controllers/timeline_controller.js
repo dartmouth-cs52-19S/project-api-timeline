@@ -54,6 +54,37 @@ export const updateTimeline = (req, res) => {
     });
 };
 
+// delete a timeline object and all its associated children
+export const deleteTimeline = (req, res) => {
+  // remove from parent
+  Timeline.findById(req.params.timelineID)
+    .then((toDelete) => {
+      Timeline.findByIdAndUpdate(toDelete.parent)
+        .then((parent) => {
+          // https://www.hostingadvice.com/how-to/javascript-remove-element-array/
+          parent.events.splice(parent.events.indexOf(toDelete._id), 1);
+        });
+    });
+  deleteHelper(req.params.timelineID);
+  res.json('Delete attempted');
+};
+
+
+// delete helper recursive
+function deleteHelper(timelineID) {
+  Timeline.findByIdAndRemove(timelineID)
+    .then((deleted) => {
+      // says to use an iterator it seems like for...of should
+      // use an iterator itself...
+      // eslint-disable-next-line no-restricted-syntax
+      for (const childID of deleted.events) {
+        deleteHelper(childID);
+      }
+    })
+    .catch((error) => {
+      console.log('big error in delete helper...', error);
+    });
+}
 
 // respond with the highest level of the timeline
 // based on the root timeline
@@ -84,13 +115,4 @@ export const getTimeline = (req, res) => {
     .catch((error) => {
       res.status(500).json(error);
     });
-};
-
-// needed?
-export const deleteTimeline = (req, res) => {
-  res.send('delete a timeline here');
-  Timeline.deleteOne({ _id: req.params.timelineID }, (err) => {
-    if (err) return console.log(err);
-    else return console.log('Deleted successfully');
-  });
 };
