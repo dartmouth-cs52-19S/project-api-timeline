@@ -68,22 +68,32 @@ export const getUser = (req, res) => {
 
 
 // what does this function do? just returns the user but with
-// the information you sent it????
+// the information you sent it?
 // Returns all user info
+// export const getUserInfo = (req, res) => {
+//   const { username } = req.user;
+//   const { email } = req.user;
+//   const { password } = req.user;
+//   const { currentPlace } = req.user;
+//   const { startTime } = req.user;
+//   const { timelines } = req.user;
+//   const { timeline } = req.user;
+//   const user = new User({
+//     username, password, email, currentPlace, startTime, timelines, timeline,
+//   });
+//   res.json(user)
+//     .catch((err) => {
+//       console.log('Error');
+//       res.status(500).json({ err });
+//     });
+// };
 export const getUserInfo = (req, res) => {
-  const { username } = req.user;
-  const { email } = req.user;
-  const { password } = req.user;
-  const { currentPlace } = req.user;
-  const { startTime } = req.user;
-  const { timelines } = req.user;
-  const user = new User({
-    username, password, email, currentPlace, startTime, timelines,
-  });
-  res.json(user)
-    .catch((err) => {
-      console.log('Error');
-      res.status(500).json({ err });
+  User.findOne(req.user.email)
+    .then((use) => {
+      res.json(use);
+    })
+    .catch((error) => {
+      res.status(505).json(error);
     });
 };
 
