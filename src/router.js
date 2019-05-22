@@ -35,6 +35,9 @@ router.route('/timeline/:timelineID')
 router.route('/auth')
   .get(requireAuth, UserController.getUser);
 
+router.route('/personal')
+  .get(requireAuth, UserController.getUserInfo);
+
 router.post('/signin', requireSignin, UserController.signin);
 router.post('/signup', UserController.signup);
 

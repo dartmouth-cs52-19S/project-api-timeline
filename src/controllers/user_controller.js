@@ -28,13 +28,11 @@ export const signup = (req, res, next) => {
         res.json('ERROR USER EXISTS');
       } else {
         const { startTime } = req.body;
-        const { currentPlace } = req.body;
         const user = new User();
         user.password = password;
         user.email = email;
         user.username = username;
         user.startTime = startTime;
-        user.currentPlace = currentPlace;
         user.save()
           .then((rslt) => {
             console.log('got result');
