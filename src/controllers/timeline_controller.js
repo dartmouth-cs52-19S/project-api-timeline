@@ -1,5 +1,5 @@
 import Timeline from '../models/timeline_model';
-import User from '../models/user_model';
+// import User from '../models/user_model';
 
 export const createTimeline = (req, res) => {
   const timeline = new Timeline();
@@ -141,7 +141,8 @@ function helperLinkTimelines(parentID, childID) {
       .then((par) => {
         if (par.events.indexOf(childID) < 0) {
           par.events.push(childID);
-          par.save();
+          // par.save();
+          par.update();
           resolve('Linked.');
         } else {
           resolve('Already linked.');
@@ -154,17 +155,20 @@ function helperLinkTimelines(parentID, childID) {
 }
 
 export const userAddTimeline = (req, res) => {
-  User.findOne({ email: req.user.email })
-    .then((user) => {
-      if (user.timeline.events.indexOf(req.body.childID) < 0) {
-        user.timeline.events.push(req.body.childID); // have to save timeline?
-        user.save(); // don't think this has to save
-        res.json('Linked to user.');
-      } else {
-        res.json('Already linked to user.');
-      }
-    })
-    .catch((error) => {
-      res.status(500).json({ error });
-    });
+  helperLinkTimelines(req.user.timeline, req.body.childID)
+    .then((resp) => { res.send(resp); })
+    .catch((error) => { res.send(error); });
+  // User.findOne({ email: req.user.email })
+  //   .then((user) => {
+  //     if (user.timeline.events.indexOf(req.body.childID) < 0) {
+  //       user.timeline.events.push(req.body.childID); // have to save timeline?
+  //       // user.save(); // don't think this has to save
+  //       res.json('Linked to user.');
+  //     } else {
+  //       res.json('Already linked to user.');
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     res.status(500).json({ error });
+  //   });
 };

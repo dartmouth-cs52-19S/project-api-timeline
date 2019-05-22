@@ -41,7 +41,8 @@ router.route('/auth')
   .get(requireAuth, UserController.getUser);
 
 router.route('/personal')
-  .get(requireAuth, UserController.getUserInfo);
+  .get(requireAuth, UserController.getUserInfo)
+  .post(requireAuth, Timelines.userAddTimeline);
 
 router.post('/signin', requireSignin, UserController.signin);
 router.post('/signup', UserController.signup);
