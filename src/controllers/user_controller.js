@@ -63,10 +63,11 @@ export const getUser = (req, res) => {
 
 // Returns all user info
 export const getUserInfo = (req, res) => {
+  console.log(req.user);
+
   const { username } = req.user;
   const { email } = req.user;
   const { password } = req.user;
-  const { currentPlace } = req.user;
   const { startTime } = req.user;
   const { timelines } = req.user;
   const user = new User({
