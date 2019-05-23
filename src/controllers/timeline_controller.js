@@ -91,7 +91,7 @@ function deleteHelper(timelineID) {
 export const rootTimeline = (req, res) => {
   // find the root timeline
   Timeline.findOne({ title: 'root' })
-    .populate('events', ['title', 'time'])
+    .populate('events', ['title', 'time', 'content', 'cover_url'])
     .then((result) => {
       console.log(result);
       res.json(result);
@@ -106,7 +106,7 @@ export const rootTimeline = (req, res) => {
 export const getTimeline = (req, res) => {
   // res.send('single timeline looked up');
   Timeline.findById(req.params.timelineID)
-    .populate('events', ['title', 'time'])
+    .populate('events', ['title', 'time', 'content', 'cover_url'])
     .then((result) => {
       console.log(result);
       res.json(result);
