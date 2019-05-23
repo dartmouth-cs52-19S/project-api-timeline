@@ -88,11 +88,19 @@ export const getUser = (req, res) => {
 //     });
 // };
 export const getUserInfo = (req, res) => {
+  console.log(req.user);
+
   User.findOne(req.user.email)
     .then((use) => {
+      console.log('Goddamit');
+      console.log(use);
+
+
       res.json(use);
     })
     .catch((error) => {
+      console.log('Why are you like this');
+
       res.status(505).json(error);
     });
 };
