@@ -69,7 +69,7 @@ export const getUser = (req, res) => {
 
 // what does this function do? just returns the user but with
 // the information you sent it?
-// Returns all user info
+// Returns all user information
 export const getUserInfo = (req, res) => {
   const {
     username, email, password, startTime, timelines, timeline,
