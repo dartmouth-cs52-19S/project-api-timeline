@@ -84,14 +84,15 @@ export const getUserInfo = (req, res) => {
       res.status(500).json({ err });
     });
 };
+
 // export const getUserInfo = (req, res) => {
-//   console.log(req.user);
+ //  console.log(req.user);
 
 //   User.findOne(req.user.email)
 //     .then((use) => {
 //       console.log('Goddamit');
 //       console.log(use);
-
+// 
 
 //       res.json(use);
 //     })
