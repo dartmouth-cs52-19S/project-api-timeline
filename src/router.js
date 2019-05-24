@@ -38,7 +38,8 @@ router.route('/user/link')
   .post(Timelines.linkTimelines);
 
 router.route('/username')
-  .get(requireAuth, UserController.checkUsername);
+  .post(UserController.checkUsername);
+
 router.route('/auth')
   .get(requireAuth, UserController.getUser);
 
