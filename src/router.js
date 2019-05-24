@@ -41,12 +41,16 @@ router.route('/timeline/:timelineID')
 router.route('/user/link')
   .post(Timelines.linkTimelines);
 
+router.route('/username')
+  .post(UserController.checkUsername);
+
 router.route('/auth')
   .get(requireAuth, UserController.getUser);
 
 router.route('/personal')
   .get(requireAuth, UserController.getUserInfo)
-  .post(requireAuth, Timelines.userAddTimeline);
+  .post(requireAuth, Timelines.userAddTimeline)
+  .put(requireAuth, Timelines.updateUserInfo);
 
 router.route('/addparents')
   .get(() => { Timelines.fillParentsHelper('5ce1b7c6c75aa400347686ee', null); });
