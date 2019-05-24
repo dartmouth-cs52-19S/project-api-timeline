@@ -86,6 +86,29 @@ function deleteHelper(timelineID) {
     });
 }
 
+// just to relink everything to make sure they have a parent value
+export function fillParentsHelper(timelineID, parentID) {
+  Timeline.findById(timelineID)
+    .then((found) => {
+      console.log('found: ', found.title);
+      if (found.parent == null) {
+        console.log('found a null parent...', found.title);
+        found.parent = parentID;
+        found.save();
+      }
+      // says to use an iterator it seems like for...of should
+      // use an iterator itself...
+      // eslint-disable-next-line no-restricted-syntax
+      for (const childID of found.events) {
+        fillParentsHelper(childID, found._id);
+      }
+    })
+    .catch((error) => {
+      console.log('big error in delete helper...', error);
+      console.log(timelineID, parentID);
+    });
+}
+
 // respond with the highest level of the timeline
 // based on the root timeline
 export const rootTimeline = (req, res) => {
