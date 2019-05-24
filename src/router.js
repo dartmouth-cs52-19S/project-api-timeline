@@ -7,6 +7,10 @@ import { requireAuth, requireSignin } from './services/passport';
 
 const router = Router();
 
+console.log('Printed from the router!');
+console.log('starting fillParentsHelper...');
+// Timelines.fillParentsHelper('5ce1b7c6c75aa400347686ee', null);
+
 router.get('/', (req, res) => {
   res.json({ message: 'welcome to our blog api!' });
 });
@@ -43,6 +47,9 @@ router.route('/auth')
 router.route('/personal')
   .get(requireAuth, UserController.getUserInfo)
   .post(requireAuth, Timelines.userAddTimeline);
+
+router.route('/addparents')
+  .get(() => { Timelines.fillParentsHelper('5ce1b7c6c75aa400347686ee', null); });
 
 router.post('/signin', requireSignin, UserController.signin);
 router.post('/signup', UserController.signup);
