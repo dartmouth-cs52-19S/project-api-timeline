@@ -53,13 +53,18 @@ export const signup = (req, res, next) => {
     });
 };
 
-// this isn't really getting anything?
-// since the front end has the user to send can't it access the user info?
-// or atleast just store it after signing in?
-// Gets and returns username
-export const getUser = (req, res) => {
+// checks if username exists
+export const checkUsername = (req, res) => {
   const { username } = req.user;
-  res.json(username)
+  let check = false;
+  User.findById(username)
+    .then((response) => {
+      check = true;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  res.json(check)
     .catch((err) => {
       console.log('Error');
       res.status(500).json({ err });
@@ -77,11 +82,33 @@ export const getUserInfo = (req, res) => {
   const user = new User({
     username, password, email, startTime, timelines, timeline,
   });
-  console.log('Goddamit');
   res.json(user)
     .catch((err) => {
       console.log('Error');
       res.status(500).json({ err });
+    });
+};
+
+export const updateUserInfo = (req, res) => {
+  const {
+    email, username, password,
+  } = req.body;
+
+  const fields = {
+    email,
+    username,
+    password,
+  };
+
+  User.findByIdAndUpdate(email, fields)
+    .then((result) => {
+      console.log('Success Updating');
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log('Failed updating');
+      console.log(error);
+      res.status(500).json({ error });
     });
 };
 
