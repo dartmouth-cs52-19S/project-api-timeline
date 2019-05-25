@@ -57,7 +57,7 @@ export const signup = (req, res, next) => {
 export const checkUsername = (req, res) => {
   const { username } = req.user;
   let check = false;
-  User.findById(username)
+  User.findOne(username)
     .then((response) => {
       check = true;
     })
@@ -97,7 +97,9 @@ export const updateUserInfo = (req, res) => {
     password,
   };
 
-  User.findByIdAndUpdate(email, fields)
+  const { id } = req.user;
+
+  User.findByIdAndUpdate(id, fields)
     .then((result) => {
       console.log('Success Updating');
       res.json(result);
