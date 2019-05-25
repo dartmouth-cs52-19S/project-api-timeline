@@ -53,7 +53,10 @@ export const signup = (req, res, next) => {
     });
 };
 
-// checks if username exists
+// this isn't really getting anything?
+// since the front end has the user to send can't it access the user info?
+// or atleast just store it after signing in?
+// Gets and returns username
 export const checkUsername = (req, res) => {
   const { username } = req.user;
   let check = false;
@@ -71,6 +74,9 @@ export const checkUsername = (req, res) => {
     });
 };
 
+
+// what does this function do? just returns the user but with
+// the information you sent it?
 // Returns all user information
 export const getUserInfo = (req, res) => {
   const {
@@ -79,6 +85,7 @@ export const getUserInfo = (req, res) => {
   const user = new User({
     username, password, email, startTime, timelines, timeline,
   });
+  console.log('Goddamit');
   res.json(user)
     .catch((err) => {
       console.log('Error');
