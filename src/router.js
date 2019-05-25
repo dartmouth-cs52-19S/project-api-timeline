@@ -44,13 +44,9 @@ router.route('/user/link')
 router.route('/auth')
   .get(requireAuth, UserController.getUser);
 
-router.route('/username')
-  .post(UserController.checkUsername);
-
 router.route('/personal')
   .get(requireAuth, UserController.getUserInfo)
-  .post(requireAuth, Timelines.userAddTimeline)
-  .put(requireAuth, Timelines.updateUserInfo);
+  .post(requireAuth, Timelines.userAddTimeline);
 
 router.route('/addparents')
   .get(() => { Timelines.fillParentsHelper('5ce1b7c6c75aa400347686ee', null); });
