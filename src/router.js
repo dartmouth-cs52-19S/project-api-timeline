@@ -37,11 +37,15 @@ router.route('/timeline/:timelineID')
 router.route('/user/link')
   .post(Timelines.linkTimelines);
 
+router.route('/username')
+  .post(UserController.checkUsername);
+
 router.route('/auth')
   .get(requireAuth, UserController.getUser);
 
 router.route('/personal')
   .get(requireAuth, UserController.getUserInfo)
+  .put(requireAuth, Timelines.updateUserInfo)
   .post(requireAuth, Timelines.userAddTimeline);
 
 // router.route('/addparents')
