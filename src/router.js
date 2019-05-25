@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   res.json({ message: 'welcome to our blog api!' });
 });
 
-// /your routes will go here
+// // /your routes will go here
 router.route('/posts')
   .post(requireAuth, Posts.createPost)
   .get(Posts.getPosts);
@@ -21,7 +21,7 @@ router.route('/posts/:postID')
   .get(Posts.getPost)
   .delete(requireAuth, Posts.deletePost);
 
-// timeline routes
+// // timeline routes
 router.route('/explore')
   .get(Timelines.rootTimeline);
 
@@ -33,19 +33,19 @@ router.route('/timeline/:timelineID')
   .delete(Timelines.deleteTimeline)
   .get(Timelines.getTimeline);
 
-// linking route to save to user
+// // linking route to save to user
 router.route('/user/link')
   .post(Timelines.linkTimelines);
 
 router.route('/username')
   .post(UserController.checkUsername);
 
-router.route('/auth')
-  .get(requireAuth, UserController.getUser);
+// router.route('/auth')
+//   .get(requireAuth, UserController.getUser);
 
 router.route('/personal')
   .get(requireAuth, UserController.getUserInfo)
-  .put(requireAuth, Timelines.updateUserInfo)
+  .put(requireAuth, UserController.updateUserInfo)
   .post(requireAuth, Timelines.userAddTimeline);
 
 // router.route('/addparents')
