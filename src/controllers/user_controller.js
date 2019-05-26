@@ -7,7 +7,7 @@ dotenv.config({ silent: true });
 
 
 export const signin = (req, res, next) => {
-  res.send({ token: tokenForUser(req.user) });
+  res.send({ token: tokenForUser(req.user), timeline: req.user.timeline });
 };
 
 // eslint-disable-next-line consistent-return

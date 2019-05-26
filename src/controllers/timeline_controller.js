@@ -131,7 +131,22 @@ export const getTimeline = (req, res) => {
   Timeline.findById(req.params.timelineID)
     .populate('events', ['title', 'time', 'content', 'cover_url'])
     .then((result) => {
-      console.log(result);
+      // console.log(result);
+      res.json(result);
+      // res.send('timelines should be returned');
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    });
+};
+
+// return the user's timeline
+export const getUserTimeline = (req, res) => {
+  // res.send('single timeline looked up');
+  Timeline.findById(req.user.timeline)
+    .populate('events', ['title', 'time', 'content', 'cover_url'])
+    .then((result) => {
+      // console.log(result);
       res.json(result);
       // res.send('timelines should be returned');
     })
@@ -160,12 +175,14 @@ export const linkTimelines = (req, res) => {
 
 function helperLinkTimelines(parentID, childID) {
   return new Promise((resolve, reject) => {
+    console.log(parentID);
     Timeline.findById(parentID)
       .then((par) => {
         if (par.events.indexOf(childID) < 0) {
           par.events.push(childID);
-          // par.save();
-          par.update();
+          console.log(par);
+          par.save();
+          // par.update();
           resolve('Linked.');
         } else {
           resolve('Already linked.');
@@ -178,9 +195,10 @@ function helperLinkTimelines(parentID, childID) {
 }
 
 export const userAddTimeline = (req, res) => {
+  console.log('CHILD ID: ', req.body.childID);
   helperLinkTimelines(req.user.timeline, req.body.childID)
     .then((resp) => { res.send(resp); })
-    .catch((error) => { res.send(error); });
+    .catch((error) => { console.log(error.message); res.status(508).json(error); });
   // User.findOne({ email: req.user.email })
   //   .then((user) => {
   //     if (user.timeline.events.indexOf(req.body.childID) < 0) {
