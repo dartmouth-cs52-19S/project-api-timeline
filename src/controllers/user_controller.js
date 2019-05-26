@@ -24,7 +24,6 @@ export const signup = (req, res, next) => {
   User.findOne({ email })
     .then((result) => {
       console.log(result);
-
       if (result != null) {
         res.json('ERROR USER EXISTS');
       } else {
@@ -35,6 +34,8 @@ export const signup = (req, res, next) => {
         user.username = username;
         user.startTime = startTime;
         user.timeline = new TimelineModel();
+        user.timeline.title = `${user.username}'s Timeline!`;
+        user.timeline.save();
         user.save()
           .then((rslt) => {
             console.log('got result');
