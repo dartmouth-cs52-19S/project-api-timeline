@@ -92,19 +92,20 @@ export const getUserInfo = (req, res) => {
 };
 
 export const updateUserInfo = (req, res) => {
-  const {
-    email, username, password,
-  } = req.body;
+  console.log(req.body);
+  // const {
+  //   email, username, password,
+  // } = req.body;
 
-  const fields = {
-    email,
-    username,
-    password,
-  };
+  // const fields = {
+  //   email,
+  //   username,
+  //   password,
+  // };
 
   const { id } = req.user;
 
-  User.findByIdAndUpdate(id, fields)
+  User.findByIdAndUpdate(id, req.body)
     .then((result) => {
       console.log('Success Updating');
       res.json(result);
