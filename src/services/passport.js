@@ -30,7 +30,7 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
     if (err) { return done(err); }
 
     if (!user) { return done(null, false); }
-
+    console.log('USER in passport ', user);
     // compare passwords - is `password` equal to user.password?
     user.comparePassword(password, (err, isMatch) => {
       if (err) {
@@ -49,6 +49,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
   // If it does, call 'done' with that other
   // otherwise, call done without a user object
   User.findById(payload.sub, (err, user) => {
+    console.log('USER in passport: ', user);
     if (err) {
       done(err, false);
     } else if (user) {

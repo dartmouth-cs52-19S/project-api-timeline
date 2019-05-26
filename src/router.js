@@ -48,6 +48,9 @@ router.route('/personal')
   .put(requireAuth, UserController.updateUserInfo)
   .post(requireAuth, Timelines.userAddTimeline);
 
+router.route('/saved')
+  .get(requireAuth, Timelines.getUserTimeline);
+
 // router.route('/addparents')
 //   .get(() => { Timelines.fillParentsHelper('5ce1b7c6c75aa400347686ee', null); });
 
