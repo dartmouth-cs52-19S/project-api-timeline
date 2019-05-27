@@ -34,6 +34,12 @@ export const signup = (req, res, next) => {
         user.username = username;
         user.startTime = startTime;
         user.timeline = new TimelineModel();
+        if (username === 'admin' || username === 'shep' || username === 'regina'
+        || username === 'zoe' || username === 'abhi' || username === 'katie') {
+          user.admin = true;
+        } else {
+          user.admin = false;
+        }
         user.timeline.title = `${user.username}'s Timeline!`;
         user.timeline.save();
         user.save()
@@ -78,10 +84,10 @@ export const checkUsername = (req, res) => {
 // Returns all user information
 export const getUserInfo = (req, res) => {
   const {
-    username, email, password, startTime, timelines, timeline,
+    username, email, password, startTime, timelines, timeline, admin,
   } = req.user;
   const user = new User({
-    username, password, email, startTime, timelines, timeline,
+    username, password, email, startTime, timelines, timeline, admin,
   });
   console.log('Goddamit');
   res.json(user)
