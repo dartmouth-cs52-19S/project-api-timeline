@@ -9,6 +9,7 @@ const UserSchema = new Schema({
   startTime: Date,
   timelines: Array,
   timeline: { type: Schema.Types.ObjectId, ref: 'Timeline' },
+  admin: Boolean,
 }, {
   toJSON: {
     virtuals: true,
