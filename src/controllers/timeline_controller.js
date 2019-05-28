@@ -14,10 +14,12 @@ export const createTimeline = (req, res) => {
   timeline.content = req.body.content;
   timeline.parent = req.body.parent;
   timeline.events = [];
+  console.log('TIMELINE', timeline);
 
   // save and return the result if successful
   timeline.save()
     .then((result) => {
+      console.log('TRYNA SAVE');
       // add to its parent's events
       Timeline.findById(timeline.parent)
         .then((par) => {
