@@ -35,18 +35,18 @@ export const signup = (req, res, next) => {
         user.startTime = startTime;
         const newTimeline = new TimelineModel();
         newTimeline.title = `${user.username}'s Timeline!`;
-        // newTimeline.save()
-        //   .then((rslt) => {
-        //     console.log('timeline: ', rslt);
-        //     user.timeline = rslt._id;
-        //   });
-        // console.log('user before save:', user);
-        // user.timeline = new TimelineModel();
-        // user.timeline.title = `${user.username}'s Timeline!`;
-        // eslint-disable-next-line arrow-body-style
+
+        // admin check
+        if (username === 'admin' || username === 'shep' || username === 'regina'
+        || username === 'zoe' || username === 'abhi' || username === 'katie') {
+          user.admin = true;
+        } else {
+          user.admin = false;
+        }
+
+        // save the timeline
         newTimeline.save();
         user.timeline = newTimeline._id;
-        // user.timeline.save().then(resss => console.log('saved timeline'));
         user.save()
           .then((rslt) => {
             console.log('got result', rslt);
@@ -89,10 +89,10 @@ export const checkUsername = (req, res) => {
 // Returns all user information
 export const getUserInfo = (req, res) => {
   const {
-    username, email, password, startTime, timelines, timeline,
+    username, email, password, startTime, timelines, timeline, admin,
   } = req.user;
   const user = new User({
-    username, password, email, startTime, timelines, timeline,
+    username, password, email, startTime, timelines, timeline, admin,
   });
   console.log('Goddamit');
   res.json(user)
