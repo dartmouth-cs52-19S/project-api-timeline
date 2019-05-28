@@ -33,19 +33,24 @@ export const signup = (req, res, next) => {
         user.email = email;
         user.username = username;
         user.startTime = startTime;
-        user.timeline = new TimelineModel();
+        const newTimeline = new TimelineModel();
+        newTimeline.title = `${user.username}'s Timeline!`;
+
+        // admin check
         if (username === 'admin' || username === 'shep' || username === 'regina'
         || username === 'zoe' || username === 'abhi' || username === 'katie') {
           user.admin = true;
         } else {
           user.admin = false;
         }
-        user.timeline.title = `${user.username}'s Timeline!`;
-        user.timeline.save();
+
+        // save the timeline
+        newTimeline.save();
+        user.timeline = newTimeline._id;
         user.save()
           .then((rslt) => {
-            console.log('got result');
-            res.send({ token: tokenForUser(user) });
+            console.log('got result', rslt);
+            res.send({ token: tokenForUser(rslt), timeline: rslt.timeline });
           })
           .catch((err) => {
             console.log('Error');
@@ -90,11 +95,7 @@ export const getUserInfo = (req, res) => {
     username, password, email, startTime, timelines, timeline, admin,
   });
   console.log('Goddamit');
-  res.json(user)
-    .catch((err) => {
-      console.log('Error');
-      res.status(500).json({ err });
-    });
+  res.json(user);
 };
 
 export const updateUserInfo = (req, res) => {
@@ -147,7 +148,3 @@ function tokenForUser(user) {
   const timestamp = new Date().getTime();
   return jwt.encode({ sub: user.id, iat: timestamp }, process.env.AUTH_SECRET);
 }
-
-
-// add to the users timeline
-// gets id for the timeline to add and add it to the users timeline
