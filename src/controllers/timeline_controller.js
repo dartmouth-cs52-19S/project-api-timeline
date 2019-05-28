@@ -2,9 +2,9 @@ import Timeline from '../models/timeline_model';
 // import User from '../models/user_model';
 
 export const createTimeline = (req, res) => {
-  if (!req.user.admin) {
-    res.status(401).json('You Do Not Have Admin Access to Add a Timeline');
-  }
+  // if (!req.user.admin) {
+  //   res.status(401).json('You Do Not Have Admin Access to Add a Timeline');
+  // }
   const timeline = new Timeline();
   timeline.title = req.body.title;
   timeline.time = req.body.time;
@@ -35,9 +35,9 @@ export const createTimeline = (req, res) => {
 
 // needed?
 export const updateTimeline = (req, res) => {
-  if (!req.user.admin) {
-    res.status(401).json('You Do Not Have Admin Access to Update a Timeline');
-  }
+  // if (!req.user.admin) {
+  //   res.status(401).json('You Do Not Have Admin Access to Update a Timeline');
+  // }
   console.log(req.body);
 
   const fields = {
