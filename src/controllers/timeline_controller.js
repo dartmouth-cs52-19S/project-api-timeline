@@ -9,7 +9,7 @@ export const createTimeline = (req, res) => {
   timeline.title = req.body.title;
   timeline.time = req.body.time;
   timeline.cover_url = req.body.cover_url;
-  timeline.level = req.body.level;
+  // timeline.level = req.body.level;
   timeline.filter = req.body.filter;
   timeline.content = req.body.content;
   timeline.parent = req.body.parent;
@@ -44,7 +44,7 @@ export const updateTimeline = (req, res) => {
     title: req.body.title,
     time: req.body.time,
     cover_url: req.body.cover_url,
-    level: req.body.level,
+    // level: req.body.level,
     filter: req.body.filter,
     content: req.body.content,
     parent: req.body.parentID,
