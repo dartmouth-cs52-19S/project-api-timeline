@@ -46,7 +46,8 @@ router.route('/username')
 router.route('/personal')
   .get(requireAuth, UserController.getUserInfo)
   .put(requireAuth, UserController.updateUserInfo)
-  .post(requireAuth, Timelines.userAddTimeline);
+  .post(requireAuth, Timelines.userAddTimeline)
+  .delete(requireAuth, Timelines.unsaveTimeline);
 
 router.route('/saved')
   .get(requireAuth, Timelines.getUserTimeline);

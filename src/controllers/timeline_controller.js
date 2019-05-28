@@ -213,3 +213,38 @@ export const userAddTimeline = (req, res) => {
   //     res.status(500).json({ error });
   //   });
 };
+
+// helper for unsaving timeline from user's timeline
+function helperRemoveEvent(parentID, childID) {
+  return new Promise((resolve, reject) => {
+    console.log(parentID);
+    Timeline.findById(parentID)
+      .then((par) => {
+        if (par.events.indexOf(childID) < 0) {
+          par.events.push(childID);
+          console.log(par);
+          par.save();
+          // par.update();
+          resolve('Linked.');
+        } else {
+          resolve('Already linked.');
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function unsaveTimeline(req, res) {
+  // call helper function with user id and whatnot
+  helperRemoveEvent(req.user.timeline, req.body.childID)
+    .then((succ) => {
+      res.send('Successfully unsaved');
+    })
+    .catch((error) => {
+      res.status(510).json({
+        message: 'failed to remove the saved timeline from the user timeline'
+      });
+    });
+}

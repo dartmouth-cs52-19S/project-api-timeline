@@ -33,13 +33,24 @@ export const signup = (req, res, next) => {
         user.email = email;
         user.username = username;
         user.startTime = startTime;
-        user.timeline = new TimelineModel();
-        user.timeline.title = `${user.username}'s Timeline!`;
-        user.timeline.save();
+        const newTimeline = new TimelineModel();
+        newTimeline.title = `${user.username}'s Timeline!`;
+        // newTimeline.save()
+        //   .then((rslt) => {
+        //     console.log('timeline: ', rslt);
+        //     user.timeline = rslt._id;
+        //   });
+        // console.log('user before save:', user);
+        // user.timeline = new TimelineModel();
+        // user.timeline.title = `${user.username}'s Timeline!`;
+        // eslint-disable-next-line arrow-body-style
+        newTimeline.save();
+        user.timeline = newTimeline._id;
+        // user.timeline.save().then(resss => console.log('saved timeline'));
         user.save()
           .then((rslt) => {
-            console.log('got result');
-            res.send({ token: tokenForUser(user) });
+            console.log('got result', rslt);
+            res.send({ token: tokenForUser(rslt), timeline: rslt.timeline });
           })
           .catch((err) => {
             console.log('Error');
@@ -141,7 +152,3 @@ function tokenForUser(user) {
   const timestamp = new Date().getTime();
   return jwt.encode({ sub: user.id, iat: timestamp }, process.env.AUTH_SECRET);
 }
-
-
-// add to the users timeline
-// gets id for the timeline to add and add it to the users timeline
