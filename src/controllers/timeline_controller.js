@@ -2,8 +2,8 @@ import Timeline from '../models/timeline_model';
 // import User from '../models/user_model';
 
 export const createTimeline = (req, res) => {
-  console.log(req.user);
-  console.log(req.user.admin);
+  // console.log(req.user);
+  // console.log(req.user.admin);
   if (!req.user.admin) {
     res.status(401).json('You Do Not Have Admin Access to Add a Timeline');
   } else {
@@ -41,7 +41,7 @@ export const updateTimeline = (req, res) => {
   if (!req.user.admin) {
     res.status(401).json('You Do Not Have Admin Access to Update a Timeline');
   }
-  console.log(req.body);
+  // console.log(req.body);
 
   const fields = {
     title: req.body.title,
@@ -52,7 +52,7 @@ export const updateTimeline = (req, res) => {
     content: req.body.content,
     parent: req.body.parentID,
   };
-  console.log(req);
+  // console.log(req);
 
   Timeline.findByIdAndUpdate(req.params.timelineID, fields, { new: true })
     .then((result) => {
@@ -128,7 +128,7 @@ export const rootTimeline = (req, res) => {
   Timeline.findOne({ title: 'root' })
     .populate('events', ['title', 'time', 'content', 'cover_url'])
     .then((result) => {
-      console.log(result);
+      // console.log(result);
       res.json(result);
       // res.send('timelines should be returned');
     })
@@ -170,7 +170,7 @@ export const getUserTimeline = (req, res) => {
 export const linkTimelines = (req, res) => {
   helperLinkTimelines(req.body.parentID, req.body.childID)
     .then((ret) => {
-      console.log(ret);
+      // console.log(ret);
       if (ret === 'Linked.') {
         res.send(ret);
       } else if (ret === 'Already linked.') {
@@ -187,7 +187,7 @@ export const linkTimelines = (req, res) => {
 
 function helperLinkTimelines(parentID, childID) {
   return new Promise((resolve, reject) => {
-    console.log(parentID);
+    // console.log(parentID);
     Timeline.findById(parentID)
       .then((par) => {
         if (par.events.indexOf(childID) < 0) {
@@ -236,10 +236,31 @@ function helperRemoveEvent(parentID, childID) {
           par.events.splice(par.events.indexOf(childID), 1);
           console.log(par);
           par.save();
+          // var opts = [{ path: 'company', match: { x: 1 }, select: 'name' }];
+
+          Timeline.populate(par,
+            [{ path: 'events', select: ['title', 'time', 'content', 'cover_url'] }])
+            .then((parToSend) => {
+              console.log('populated?', parToSend);
+              resolve(parToSend);
+            })
+            .catch((err) => {
+              console.log('Error in populating, ', err);
+              resolve(par);
+            });
           // par.update();
-          resolve('Removed from users saved timelines');
+          // resolve(par);
         } else {
-          resolve('Does not exist in users timelines');
+          Timeline.populate(par,
+            [{ path: 'events', select: ['title', 'time', 'content', 'cover_url'] }])
+            .then((parToSend) => {
+              console.log('populated?', parToSend);
+              resolve(parToSend);
+            })
+            .catch((err) => {
+              console.log('Error in populating, ', err);
+              resolve(par);
+            });
         }
       })
       .catch((error) => {
@@ -250,6 +271,7 @@ function helperRemoveEvent(parentID, childID) {
 
 export function unsaveTimeline(req, res) {
   // call helper function with user id and whatnot
+  console.log('calling to remove from users timeline');
   helperRemoveEvent(req.user.timeline, req.body.childID)
     .then((resp) => { res.send(resp); })
     .catch((error) => { console.log(error.message); res.status(508).json(error); });
