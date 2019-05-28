@@ -92,7 +92,7 @@ export const getUserInfo = (req, res) => {
     username, email, password, startTime, timelines, timeline, admin,
   } = req.user;
   const user = new User({
-    username, password, email, startTime, timelines, timeline, admin,
+    username, password: null, email, startTime, timelines, timeline, admin,
   });
   console.log('Goddamit');
   res.json(user);
