@@ -2,52 +2,43 @@ import Timeline from '../models/timeline_model';
 // import User from '../models/user_model';
 
 export const createTimeline = (req, res) => {
-  console.log(req.user);
-  console.log(req.user.admin);
-  if (!req.user.admin) {
-    res.status(401).json('You Do Not Have Admin Access to Add a Timeline');
-  } else {
-    const timeline = new Timeline();
-    timeline.title = req.body.title;
-    timeline.time = req.body.time;
-    timeline.cover_url = req.body.cover_url;
-    // timeline.level = req.body.level;
-    timeline.filter = req.body.filter;
-    timeline.content = req.body.content;
-    timeline.parent = req.body.parent;
-    timeline.events = [];
+  const timeline = new Timeline();
+  timeline.title = req.body.title;
+  timeline.time = req.body.time;
+  timeline.cover_url = req.body.cover_url;
+  timeline.level = req.body.level;
+  timeline.filter = req.body.filter;
+  timeline.content = req.body.content;
+  timeline.parent = req.body.parent;
+  timeline.events = [];
 
-    // save and return the result if successful
-    timeline.save()
-      .then((result) => {
-        // add to its parent's events
-        Timeline.findById(timeline.parent)
-          .then((par) => {
-            par.events.push(result._id);
-            par.save();
-          });
+  // save and return the result if successful
+  timeline.save()
+    .then((result) => {
+      // add to its parent's events
+      Timeline.findById(timeline.parent)
+        .then((par) => {
+          par.events.push(result._id);
+          par.save();
+        });
 
-        // send the result back as confirmation
-        res.json(result);
-      })
-      .catch((error) => {
-        res.status(500).json({ error });
-      });
-  }
+      // send the result back as confirmation
+      res.json(result);
+    })
+    .catch((error) => {
+      res.status(500).json({ error });
+    });
 };
 
 // needed?
 export const updateTimeline = (req, res) => {
-  if (!req.user.admin) {
-    res.status(401).json('You Do Not Have Admin Access to Update a Timeline');
-  }
   console.log(req.body);
 
   const fields = {
     title: req.body.title,
     time: req.body.time,
     cover_url: req.body.cover_url,
-    // level: req.body.level,
+    level: req.body.level,
     filter: req.body.filter,
     content: req.body.content,
     parent: req.body.parentID,
@@ -65,9 +56,6 @@ export const updateTimeline = (req, res) => {
 
 // delete a timeline object and all its associated children
 export const deleteTimeline = (req, res) => {
-  if (!req.user.admin) {
-    res.status(401).json('You Do Not Have Admin Access to Delete a Timeline');
-  }
   // remove from parent
   Timeline.findById(req.params.timelineID)
     .then((toDelete) => {
