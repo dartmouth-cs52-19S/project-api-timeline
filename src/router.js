@@ -26,11 +26,11 @@ router.route('/explore')
   .get(Timelines.rootTimeline);
 
 router.route('/timeline')
-  .post(Timelines.createTimeline);
+  .post(requireAuth, Timelines.createTimeline);
 
 router.route('/timeline/:timelineID')
-  .post(Timelines.updateTimeline)
-  .delete(Timelines.deleteTimeline)
+  .post(requireAuth, Timelines.updateTimeline)
+  .delete(requireAuth, Timelines.deleteTimeline)
   .get(Timelines.getTimeline);
 
 // // linking route to save to user

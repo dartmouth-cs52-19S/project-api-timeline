@@ -95,11 +95,7 @@ export const getUserInfo = (req, res) => {
     username, password, email, startTime, timelines, timeline, admin,
   });
   console.log('Goddamit');
-  res.json(user)
-    .catch((err) => {
-      console.log('Error');
-      res.status(500).json({ err });
-    });
+  res.json(user);
 };
 
 export const updateUserInfo = (req, res) => {
