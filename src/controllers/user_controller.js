@@ -89,10 +89,10 @@ export const checkUsername = (req, res) => {
 // Returns all user information
 export const getUserInfo = (req, res) => {
   const {
-    username, email, password, startTime, timelines, timeline, admin,
+    username, email, startTime, timelines, timeline, admin,
   } = req.user;
   const user = new User({
-    username, password, email, startTime, timelines, timeline, admin,
+    username, password: null, email, startTime, timelines, timeline, admin,
   });
   console.log('Goddamit');
   res.json(user);
