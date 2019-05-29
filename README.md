@@ -1,6 +1,11 @@
 # Timeline
 
-Timeline is amorphous, unique, and mysterious. Super cool. You don't really know what it is. We don't either! Let's hope we both find out in the next two weeks.
+Have you ever felt overwhelmed or undereducated about all the opportunities available to you in life? Us too. That's why we built Timeline, a website that helps you know what you don't. This is the `backend server` that helps to power all the good stuff on http://lifetime.surge.sh/. Welcome!!!
+
+## About 
+Timeline allows you to visualize big life possibilities - think college, trade school, the army, etc - and create self-curated timelines of your future, exposing you and others to options in life you wouldn't have otherwise known about.
+
+The main goal of Timeline is exposure rather than planning - once you know about an opportunity, there are plenty of resources to figure out how to get there. Timeline aims to overcome the problem of the "unknown unknowns," and open your mind to the many possibilities in life.
 
 ## Architecture
 
