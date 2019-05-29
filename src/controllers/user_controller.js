@@ -67,7 +67,7 @@ export const signup = (req, res, next) => {
 
 // checks if user with given username exists
 export const checkUsername = (req, res) => {
-  const { username } = req.user;
+  const { username } = req.body;
   let check = false;
   User.findOne(username)
     .then((response) => {
