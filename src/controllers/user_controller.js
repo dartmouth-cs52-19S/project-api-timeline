@@ -38,7 +38,8 @@ export const signup = (req, res, next) => {
 
         // admin check
         if (username === 'admin' || username === 'shep' || username === 'regina'
-        || username === 'zoe' || username === 'abhi' || username === 'katie') {
+        || username === 'zoe' || username === 'abhi' || username === 'katie'
+        || username === 'tim') {
           user.admin = true;
         } else {
           user.admin = false;
