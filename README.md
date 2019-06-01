@@ -12,6 +12,8 @@ The main goal of Timeline is exposure rather than planning - once you know about
 ### API Routes
 * GET ```/api/explore``` returns the root timeline element which contains the list of top level timelines under an array ```events```. [link](https://timimeline.herokuapp.com/api/explore).
 * GET ```/api/timeline/:timelineId``` returns the requested timeline object. [link](https://timimeline.herokuapp.com/api/timeline/5ce1dfadf41c760034ffe52d).
+* POST ```/api/timeline/:timelineID``` updates the timeline. Takes the same inputes in the request as the create one.
+* DELETE ```/api/timeline/:timelineID``` deletes the specific timeline as well as all of its children. USE CAUTIOUSLY. It will delete a lot if used on the wrong node. It is like rm -rf. 
 * POST ```/api/timeline``` creates a new timeline object under a given parent. The post should include the req items shown on the right: 
 ```javascript
   timeline.title = req.body.title;
@@ -22,10 +24,14 @@ The main goal of Timeline is exposure rather than planning - once you know about
   timeline.content = req.body.content;
   timeline.parent = req.body.parentID;
 ```
-* POST ```/api/timeline/:timelineID``` updates the timeline. Takes the same inputes in the request as the create one.
-* There is also a route to create a timeline post, but it does not yet fill in the appropriate events below it nor does it go to the level above to insert its own reference in the timeline that includes it. 
-
-Note that the database does not have all the data in it by any stretch. It does contain two paths that go to college (4yr) and work (internship). 
+* POST ```/api/username``` checks the user's username. 
+* GET ```/api/personal``` returns the user object, including the user's timeline (does not include hashed password). This is used as the front end need the full user object at times. 
+* PUT ```/api/personal``` updates the user info. 
+* POST ```/api/personal``` saves a timeline to the user's timeline. Is an authorized route so it just needs the id of the timeline to be saved. Checks if the exact timeline is already saved. The user can save any timeline they would like. 
+* DELETE ```/api/personal``` removes a saved timeline from the user's timeline. 
+* GET ```/api/saved``` returns the user's saved timeline, it is slightly different from GET ```/api/timeline/:timelineID``` in that it returns the cover url in addition to the title, time and content. 
+* POST ```/api/signin``` sign the user in. 
+* POST ```/api/signup``` signs up a user, adding them to the user database. 
 
 <details>
     <summary>Examples</summary> 
@@ -145,18 +151,17 @@ So when you fetch either the explore page or a specific timeline you can expect 
     "id": "5ce1c555cc465b0034eceed7"
 }
 ```
+This was a significant design decision at the beginning of the project that certainly takes a bit to wrap your head around, but it did make traversing, adding data with varying levels under each node, removing data, saving data to the user and displaying it very easily as it was the same information that the explore page displays. It also allowed us to use some easy recursive code for deleting and some development additions that went to each node. The user's timelines are separated from the root timeline, as in they are not children under root, which makes each user's unreachable from a progression through the tree of the explore data. Of course, the user's timeline contains data from the explore timeline. Though it did take some time for us to all understand how the data model works, the additional thought did lead to a relatively simple backend in terms of the code that represents a good bit of time spent thinking about the data model and storage. 
 
 #### Users
-The user model contains the user password as well as...
+The user model contains the user password, email (unique), username (unique), startTime which is the time they started high school, a timeline object that is the the user's saved timelines, and a boolean for whether or not the user is an admin. Only admin users can add, delete, or update, the information presented on the explore page. 
 
 ## Setup
-`yarn` all the things
+`yarn` all the things.
 
 ## Deployment
-heroku git: https://git.heroku.com/timimeline.git
-heroku domain: https://timimeline.herokuapp.com/
-
-Stay tuned for the deployed site. Change the deploy URL in package.json to another surge URL and hit that `yarn deploy`.
+Deploys automatically on pull request merges using Travis and github auto-deploy to heroku. The database ends up on: 
+* heroku domain: https://timimeline.herokuapp.com/
 
 To test locally, clone `project-api-timeline` and `project-timeline` repos. `yarn dev` it all, and mongod/mongo the backend. Frontend runs on localhost port 8080 while backend runs on 9090. 
 
@@ -175,11 +180,11 @@ Zoe Yu '19
 
 ## Sources
 
-Code is based off Abhi's Lab 5 for backend (this) and Regina's Lab 4/5 for frontend. Unfortunately we have not populated their sources to here...so check out their assignments if you're really concerned. Generally the structure follows what was given in class and in the lab assignments for lab 5.
+Code is based off Abhi's Lab 5 for backend (this) and Regina's Lab 4/5 for frontend. Unfortunately we have not populated their sources to here...so check out their assignments if you're really concerned. Generally the structure follows what was given in class and in the lab assignments for lab 5. Some specific citations of code are included with the relevant lines of code. 
 
 ## Acknowledgments
 
-TA's
+TA's, especially Jasmine
 Tim
 
 ![Team Photo](src/img/teamTimeline.jpeg)

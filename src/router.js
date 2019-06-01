@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   res.json({ message: 'welcome to our blog api!' });
 });
 
-// // /your routes will go here
+// /your routes will go here
 router.route('/posts')
   .post(requireAuth, Posts.createPost)
   .get(Posts.getPosts);
@@ -34,8 +34,8 @@ router.route('/timeline/:timelineID')
   .get(Timelines.getTimeline);
 
 // // linking route to save to user
-router.route('/user/link')
-  .post(Timelines.linkTimelines);
+// router.route('/user/link')
+//   .post(Timelines.linkTimelines);
 
 router.route('/username')
   .post(UserController.checkUsername);
