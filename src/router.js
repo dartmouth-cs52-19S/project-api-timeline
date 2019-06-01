@@ -11,15 +11,15 @@ router.get('/', (req, res) => {
   res.json({ message: 'welcome to our blog api!' });
 });
 
-// // /your routes will go here
-// router.route('/posts')
-//   .post(requireAuth, Posts.createPost)
-//   .get(Posts.getPosts);
+// /your routes will go here
+router.route('/posts')
+  .post(requireAuth, Posts.createPost)
+  .get(Posts.getPosts);
 
-// router.route('/posts/:postID')
-//   .put(requireAuth, Posts.updatePost)
-//   .get(Posts.getPost)
-//   .delete(requireAuth, Posts.deletePost);
+router.route('/posts/:postID')
+  .put(requireAuth, Posts.updatePost)
+  .get(Posts.getPost)
+  .delete(requireAuth, Posts.deletePost);
 
 // // timeline routes
 router.route('/explore')
