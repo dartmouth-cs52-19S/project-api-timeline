@@ -12,14 +12,14 @@ router.get('/', (req, res) => {
 });
 
 // // /your routes will go here
-router.route('/posts')
-  .post(requireAuth, Posts.createPost)
-  .get(Posts.getPosts);
+// router.route('/posts')
+//   .post(requireAuth, Posts.createPost)
+//   .get(Posts.getPosts);
 
-router.route('/posts/:postID')
-  .put(requireAuth, Posts.updatePost)
-  .get(Posts.getPost)
-  .delete(requireAuth, Posts.deletePost);
+// router.route('/posts/:postID')
+//   .put(requireAuth, Posts.updatePost)
+//   .get(Posts.getPost)
+//   .delete(requireAuth, Posts.deletePost);
 
 // // timeline routes
 router.route('/explore')
@@ -34,8 +34,8 @@ router.route('/timeline/:timelineID')
   .get(Timelines.getTimeline);
 
 // // linking route to save to user
-router.route('/user/link')
-  .post(Timelines.linkTimelines);
+// router.route('/user/link')
+//   .post(Timelines.linkTimelines);
 
 router.route('/username')
   .post(UserController.checkUsername);
