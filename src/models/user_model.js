@@ -16,39 +16,22 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.pre('save', function beforeUserSave(next) {
-  // this is a reference to our model
-  // the function runs in some other context so DO NOT bind it
-  const user = this;
-
-  if (!user.isModified('password')) return next();
-
-  // TODO: do stuff here
-  try {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(user.password, salt);
-    user.password = hash;
-    return next();
-  } catch (error) {
-    return next(error);
-  }
-
-
-  // when done run the **next** callback with no arguments
-  // call next with an error if you encounter one
-  // return next();
-});
-
-UserSchema.pre('update', function beforeUserUpdate(next) {
+UserSchema.pre('update', function afterUserUpdate(next) {
   const user = this;
   const modified = user.getUpdate().$set.password;
+  console.log('We in here');
+
   if (!modified) {
     return next();
   }
   try {
+    console.log('We in try');
+
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(user.password, salt);
-    user.getUpdate().$set.password = hash;
+    console.log(user);
+
+    user.password = hash;
     return next();
   } catch (error) {
     return next(error);

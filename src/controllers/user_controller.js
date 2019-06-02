@@ -1,5 +1,6 @@
 import jwt from 'jwt-simple';
 import dotenv from 'dotenv';
+import bcrypt from 'bcryptjs';
 import User from '../models/user_model';
 import TimelineModel from '../models/timeline_model';
 
@@ -112,9 +113,21 @@ export const updateUserInfo = (req, res) => {
 
   const { id } = req.user;
 
+  if (req.body.password) {
+    try {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(req.body.password, salt);
+      req.body.password = hash;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   User.findByIdAndUpdate(id, req.body)
     .then((result) => {
       console.log('Success Updating');
+      console.log('fegsfgsfgwgf');
+
       res.json(result);
     })
     .catch((error) => {
