@@ -39,6 +39,23 @@ UserSchema.pre('save', function beforeUserSave(next) {
   // return next();
 });
 
+UserSchema.pre('update', function beforeUserUpdate(next) {
+  const user = this;
+  const modified = user.getUpdate().$set.password;
+  if (!modified) {
+    return next();
+  }
+  try {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(user.password, salt);
+    user.getUpdate().$set.password = hash;
+    return next();
+  } catch (error) {
+    return next(error);
+  }
+});
+
+
 //  note use of named function rather than arrow notation
 //  this arrow notation is lexically scoped and prevents binding scope, which mongoose relies on
 UserSchema.methods.comparePassword = function comparePassword(candidatePassword, callback) {
